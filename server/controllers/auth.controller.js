@@ -166,5 +166,4 @@ export const refreshToken = async (req, res) => {
   }
 };
 
-// TODO: add middleware
 export const getProfile = async (req, res) => {};
