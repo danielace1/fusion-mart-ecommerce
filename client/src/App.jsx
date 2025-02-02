@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import Category from "./pages/Category";
 
 const App = () => {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -47,6 +48,7 @@ const App = () => {
               user?.role === "admin" ? <Admin /> : <Navigate to="/login" />
             }
           />
+          <Route path="/category/:category" element={<Category />} />
         </Routes>
         <Toaster />
       </div>
