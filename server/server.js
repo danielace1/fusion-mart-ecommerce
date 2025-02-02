@@ -13,7 +13,7 @@ import analyticsRoutes from "./routes/analytics.route.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);

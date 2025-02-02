@@ -31,11 +31,13 @@ const productSchema = new mongoose.Schema(
     countInStock: {
       type: Number,
       required: true,
+      min: 0,
     },
 
     rating: {
       type: Number,
-      required: true,
+      min: 1,
+      max: 5,
     },
 
     isFeatured: {

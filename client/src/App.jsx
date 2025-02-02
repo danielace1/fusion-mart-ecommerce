@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+
 import { useUserStore } from "./stores/useUserStore";
 import TheNavbar from "./components/TheNavbar";
 import LoadingSpinner from "./components/LoadingSpinner";
+
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 
 const App = () => {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -29,7 +32,7 @@ const App = () => {
       <div className="relative z-50 pt-20">
         <TheNavbar />
         <Routes>
-          <Route path="/" element={user && <Home />} />
+          <Route path="/" element={<Home />} />
           <Route
             path="/signup"
             element={!user ? <SignUp /> : <Navigate to="/" />}
@@ -37,6 +40,12 @@ const App = () => {
           <Route
             path="/login"
             element={!user ? <Login /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/secret-dashboard"
+            element={
+              user?.role === "admin" ? <Admin /> : <Navigate to="/login" />
+            }
           />
         </Routes>
         <Toaster />

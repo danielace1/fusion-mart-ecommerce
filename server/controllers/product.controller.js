@@ -6,7 +6,7 @@ export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find({});
 
-    return res.status(200).json(products);
+    return res.status(200).json({ products });
   } catch (error) {
     console.error("Error in get all products: " + error.message);
     return res.status(500).json({ message: error.message });
@@ -52,7 +52,7 @@ export const createProduct = async (req, res) => {
       });
     }
 
-    const product = new Product({
+    const product = await Product.create({
       name,
       price,
       description,
