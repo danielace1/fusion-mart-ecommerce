@@ -44,7 +44,7 @@ export const getDailySalesData = async (startDate, endDate) => {
       {
         $group: {
           _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-          sales: { $num: 1 },
+          sales: { $sum: 1 },
           revenue: { $sum: "$totalAmount" },
         },
       },
@@ -56,13 +56,13 @@ export const getDailySalesData = async (startDate, endDate) => {
 
     const dateArray = getDatesInRange(startDate, endDate);
 
-    return dateArray.map((data) => {
+    return dateArray.map((date) => {
       const foundData = dailySalesData.find((item) => item._id === date);
 
       return {
         date,
-        sales: foundData ? foundData.sales : 0,
-        revenue: foundData ? foundData.revenue : 0,
+        sales: foundData?.sales || 0,
+        revenue: foundData?.revenue || 0,
       };
     });
   } catch (error) {
@@ -76,7 +76,7 @@ function getDatesInRange(startDate, endDate) {
   let currentDate = new Date(startDate);
 
   while (currentDate <= endDate) {
-    data.push(currentDate.toISOString().split("T")[0]);
+    dates.push(currentDate.toISOString().split("T")[0]);
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
