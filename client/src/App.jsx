@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { useUserStore } from "./stores/useUserStore";
+import { useCartStore } from "./stores/useCartStore";
 import TheNavbar from "./components/TheNavbar";
 import LoadingSpinner from "./components/LoadingSpinner";
 
@@ -11,13 +12,20 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Category from "./pages/Category";
+import Cart from "./pages/Cart";
 
 const App = () => {
   const { user, checkAuth, checkingAuth } = useUserStore();
+  const { getCartItems } = useCartStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    if (!user) return;
+    getCartItems();
+  }, [getCartItems, user]);
 
   if (checkingAuth) return <LoadingSpinner />;
 
@@ -49,6 +57,10 @@ const App = () => {
             }
           />
           <Route path="/category/:category" element={<Category />} />
+          <Route
+            path="/cart"
+            element={user ? <Cart /> : <Navigate to="/login" />}
+          />
         </Routes>
         <Toaster />
       </div>

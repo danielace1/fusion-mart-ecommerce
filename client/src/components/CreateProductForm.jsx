@@ -145,7 +145,7 @@ const CreateProductForm = () => {
             onChange={(e) =>
               setNewProduct({ ...newProduct, countInStock: e.target.value })
             }
-            min={0}
+            min={1}
             className="create-products-input"
             required
           />
